@@ -8,7 +8,6 @@ import { CircularProgress, Divider } from "@mui/material";
 import Nav from "../Home page components/Nav";
 import SideBar from "../Home page components/SideBar";
 import CommentSection from "../Home page components/CommentSection";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 const PostDetails = ({ currentID, setCurrentId }) => {
@@ -56,19 +55,9 @@ const PostDetails = ({ currentID, setCurrentId }) => {
       <div className="post__container">
         <div className="post__wrapper">
           <div className="post__details">
+            <div className="links">
             <h1>{post.title}</h1>
-            <p>{post?.tags?.map((tag) => `#${tag} `)}</p>
-            <p>{post.message}</p>
-            <p>
-              Created by:
-              <Link to={`/creators/${post.name}`}>
-                <span>{` ${post.name}`}</span>
-              </Link>
-            </p>
             <div className="posts__links">
-              <Link to={post?.linkedin} target="_blank">
-                <LinkedInIcon className="post__icon" />
-              </Link>
               <Link to={post?.gitHub} target="_blank">
                 <GitHubIcon className="post__icon"/>
               </Link>
@@ -76,6 +65,16 @@ const PostDetails = ({ currentID, setCurrentId }) => {
                 <OpenInNewIcon className="post__icon"/>
               </Link>
             </div>
+            </div>
+            <p>{post.tags?.map((tag) => `#${tag} `)}</p>
+            <p>
+              Created by:
+              <Link to={`/creators/${post.name}`}>
+                <span>{` ${post.name}`}</span>
+              </Link>
+            </p>
+            <p>{post.message}</p>
+            
             <p>{moment(post.createdAt).fromNow()}</p>
             <Divider style={{ margin: "20px 0" }} />
             <CommentSection post={post} />
@@ -90,7 +89,7 @@ const PostDetails = ({ currentID, setCurrentId }) => {
               }
               alt={post.title}
             />
-            
+  
           </div>
         </div>
         {recommendedPosts?.length && (
@@ -99,14 +98,14 @@ const PostDetails = ({ currentID, setCurrentId }) => {
             <Divider />
             <div className="recommendedPosts__wrapper">
               {recommendedPosts.map(
-                ({ title, name, likes, selectedFile, _id }) => (
+                ({ title, name, likes, selectedFile, _id, tags }) => (
                   <div
                     className="recommendedPost"
                     onClick={() => openPost(_id)}
                     key={_id}
                   >
                     <p variant="h6">{title}</p>
-                    <p>{post?.tags?.map((tag) => `#${tag} `)}</p>
+                    <p>{tags?.map((tag) => `#${tag} `)}</p>
                     <p variant="subtitle2">{name}</p>
                     <p variant="subtitle1">Likes: {likes?.length}</p>
                     <img src={selectedFile} />

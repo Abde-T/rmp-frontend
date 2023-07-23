@@ -8,7 +8,7 @@ const Info = () => {
           <div className="info__wrapper">
             <img src={pc} className="pc" alt="pc gif" data-aos="fade-right"/>
             <h2 className="info__phrase" data-aos="fade-left">
-              Level Up Your Portfolio: Get Valuable Insights from the Community and Stand Out in the Crowd.
+              Level Up Your Project: Get Valuable Insights from the Community and Stand Out in the Crowd.
             </h2>
           </div>
         </div>

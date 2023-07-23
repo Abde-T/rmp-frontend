@@ -24,16 +24,16 @@ const RandomProject = ({ currentID, setCurrentId }) => {
     <>
       <div className="Random-project__container">
         <div className="cards-">
-          {!posts?.length > 0
-            ?  renderLoadingStates()
-            : shuffledPosts.slice(0,10).map((post, index) => (
+          {isLoading
+            ?  (renderLoadingStates()
+            ):( shuffledPosts.slice(0,10).map((post, index) => (
                 <Post
                   currentID={currentID}
                   post={post}
                   setCurrentId={setCurrentId}
                   key={index}
                 />
-              ))}
+              )))}
         </div>
       </div>
     </>

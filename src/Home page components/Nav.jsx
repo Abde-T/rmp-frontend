@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import Form from "./form/Form";
-import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
+import { Avatar, Divider, IconButton } from "@mui/material";
 import UsersLoading from "../ui/UsersLoading";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as actionType from "../constants/actionTypes";
@@ -60,12 +60,12 @@ const Nav = ({ currentID, setCurrentId }) => {
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
-        `/posts/projects/search?searchQuery=${
+        `/posts/search?searchQuery=${
           search || "none"
         }&tags=${tags.join(",")}`
       );
     } else {
-      navigate("/posts/projects");
+      navigate("/posts");
     }
   };
 
@@ -143,7 +143,7 @@ const Nav = ({ currentID, setCurrentId }) => {
               <Avatar
                 className="user__icon"
                 alt={user?.result.name}
-                src={user?.result.imageUrl}
+                src={user?.result.selectedFile}
                 sx={{ width: 40, height: 40 }}
                 style={{
                   backgroundColor: "#242424",

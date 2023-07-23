@@ -13,7 +13,8 @@ function useQuery() {
 }
 
 const Projects = () => {
-  const { posts } = useSelector((state) => state.posts);
+  const [filter, setFilter] = useState("newest");
+  const { posts, isLoading } = useSelector((state) => state.posts);
   const [currentID, setCurrentId] = useState(0);
   const dispatch = useDispatch();
 
@@ -28,25 +29,43 @@ const Projects = () => {
   const [tags, setTags] = useState([]);
   const searchQuery = query.get("searchQuery");
 
+  let sortedPosts = [];
+  if (Array.isArray(posts)) {
+    sortedPosts = [...posts];
+    if (filter === "newest") {
+      sortedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    } else if (filter === "likes") {
+      sortedPosts.sort((a, b) => b.likes?.length - a.likes?.length);
+    } else if (filter === "comments") {
+      sortedPosts.sort((a, b) => b.comments?.length - a.comments?.length);
+    }
+  }
   return (
     <>
       <Nav currentID={currentID} setCurrentId={setCurrentId} />
       <SideBar />
       <div className="projects__container">
+        <select
+          className="filter"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="newest">Newest</option>
+          <option value="likes">Likes</option>
+          <option value="comments">Most Commented</option>
+        </select>
         <div className="cards-">
-          {!posts?.length > 0
+          {isLoading
             ? new Array(8)
                 .fill(0)
                 .map((_, index) => <CardLoadingstate key={index} />)
-            : posts.map((post) => (
-                <div className="grid_layout">
-                  <Post
-                    currentID={currentID}
-                    post={post}
-                    setCurrentId={setCurrentId}
-                    key={post._id}
-                  />
-                </div>
+            : sortedPosts.map((post, index) => (
+                <Post
+                  currentID={currentID}
+                  post={post}
+                  setCurrentId={setCurrentId}
+                  key={index}
+                />
               ))}
         </div>
         {!searchQuery && !tags.length && (

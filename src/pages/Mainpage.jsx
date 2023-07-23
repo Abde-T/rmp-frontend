@@ -1,9 +1,9 @@
 import React from 'react';
-import Landing from '../Main page components/Landing';
-import Info from '../Main page components/info';
-import Details from '../Main page components/Details';
-import FormSection from '../Main page components/FormSection';
-import Footer from '../Main page components/Footer';
+import Landing from '../MainPageComponents/Landing';
+import Info from '../MainPageComponents/Info';
+import Details from '../MainPageComponents/Details';
+import FormSection from '../MainPageComponents/FormSection';
+import Footer from '../MainPageComponents/Footer';
 
 const Mainpage = () => {
     return (

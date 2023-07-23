@@ -1,10 +1,24 @@
-import React from "react";
-import { HomeIcon, InboxIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { HomeIcon } from "@heroicons/react/outline";
+import { Link, useNavigate } from "react-router-dom";
 import "./HomePage.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+import PersonIcon from "@mui/icons-material/Person";
+import { useDispatch } from "react-redux";
+import * as actionType from "../constants/actionTypes";
+
 const SideBar = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    dispatch({ type: actionType.LOGOUT });
+    navigate("/auth");
+    setUser(null);
+  };
+
   return (
     <div className="SideBar__container">
       <SideNav
@@ -24,10 +38,11 @@ const SideBar = () => {
           }}
         />
         <SideNav.Nav defaultSelected="home">
-          <NavItem eventKey="home"
-          style={{
-            margin: '16px 0',
-          }}
+          <NavItem
+            eventKey="home"
+            style={{
+              margin: "16px 0",
+            }}
           >
             <NavIcon>
               <Link to={"/posts"}>
@@ -44,9 +59,9 @@ const SideBar = () => {
             </NavText>
           </NavItem>
 
-          <NavItem eventKey="Messages">
+          <NavItem eventKey="info" >
             <NavIcon>
-              <SidebarLink Icon={InboxIcon} />
+              <SidebarLink Icon={PersonIcon} />
             </NavIcon>
             <NavText
               style={{
@@ -54,26 +69,32 @@ const SideBar = () => {
                 color: "#242424",
               }}
             >
-              Messages
+              Profile
             </NavText>
-            <NavItem eventKey="Messages/linechart">
+            <NavItem eventKey="info/profile">
               <NavText
                 style={{
-                  fontFamily: "Glitch Goblin",
-                  color: "#242424",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                
+                <Link to={`/creators/${user?.result.name}`}>
+                  <div className="user__name"> {user?.result.name} </div>
+                </Link>
               </NavText>
             </NavItem>
-            <NavItem eventKey="Messages/barchart">
+            <NavItem eventKey="info/Logout">
               <NavText
                 style={{
-                  fontFamily: "Glitch Goblin",
-                  color: "#242424",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                
+                <div className="div__button side__button" onClick={logout}>
+                  Logout
+                </div>
               </NavText>
             </NavItem>
           </NavItem>

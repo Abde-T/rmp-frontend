@@ -1,18 +1,18 @@
 import { START_LOADING, END_LOADING, FETCH, FETCH_ALL, FETCH_POST, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, FETCH_BY_CREATOR } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
-export const getPosts = () => async (dispatch) => {
-  try {
-    dispatch({ type: START_LOADING });
+// export const getPosts = () => async (dispatch) => {
+//   try {
+//     dispatch({ type: START_LOADING });
 
-    const { data } = await api.fetchPosts();
+//     const { data } = await api.fetchPosts();
 
-    dispatch({ type: FETCH, payload: data });
-    dispatch({ type: END_LOADING });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     dispatch({ type: FETCH, payload: data });
+//     dispatch({ type: END_LOADING });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 export const getAllPosts = (page) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });

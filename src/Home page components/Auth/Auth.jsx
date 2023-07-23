@@ -5,11 +5,15 @@ import Input from "./Input";
 import { Button } from "@mui/material";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
-import Icon from "./icon";
+import Icon from "./Icon";
 import { useDispatch } from "react-redux";
 import { AUTH } from "../../constants/actionTypes";
 import { useNavigate } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
+import FileBase from "react-file-base64";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import AddLinkIcon from "@mui/icons-material/AddLink";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const initialState = {
   firstName: "",
@@ -17,6 +21,10 @@ const initialState = {
   email: "",
   password: "",
   confirmPassword: "",
+  linkedin: "",
+  gitHub: "",
+  website: "",
+  selectedFile: "",
 };
 const Auth = () => {
   const [form, setForm] = useState(initialState);
@@ -26,8 +34,12 @@ const Auth = () => {
   const navigate = useNavigate();
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>{
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+  const handleFile = (base64) =>{
+    setForm({ ...form, selectedFile: base64 })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,22 +82,65 @@ const Auth = () => {
           <div name="title">{isSignUp ? "Sign Up" : "Sign In"}</div>
           {isSignUp && (
             <>
-              <div className="name__input">
-                <Input
-                  name="firstName"
-                  label="First Name"
-                  handleChange={handleChange}
-                  className="auth_input"
-                  autoFocus
-                  half
-                />
-                <Input
-                  name="lastName"
-                  label="Last Name"
-                  handleChange={handleChange}
-                  className="auth_input"
-                  half
-                />
+              <div className="user__details">
+                <div className="name__input">
+                  <Input
+                    name="firstName"
+                    label="First Name"
+                    handleChange={handleChange}
+                    className="auth_input"
+                    autoFocus
+                    half
+                  />
+                  <Input
+                    name="lastName"
+                    label="Last Name"
+                    handleChange={handleChange}
+                    className="auth_input"
+                    half
+                  />
+                </div>
+                <div className="image__upload">
+                  <FileBase
+                    type="file"
+                    multiple={false}
+                    name="selectedFile"
+                    onDone={({ base64 }) =>
+                    handleFile(base64)
+                  }
+                  />
+                </div>
+                <div className="singup__inputs">
+                <div className="icon__box">
+                    <LinkedInIcon />
+                    <Input
+                      label="LinkedIn"
+                      name="linkedin"
+                      className="auth_input_ "
+                      handleChange={handleChange}
+
+                    />
+                  </div>
+                  <div className="icon__box">
+                    <GitHubIcon />
+                    <Input
+                      label="GitHub"
+                      name="gitHub"
+                      className="auth_input_"
+                      handleChange={handleChange}
+
+                    />
+                  </div>
+                  <div className="icon__box">
+                    <AddLinkIcon />
+                    <Input
+                      label="Portfolio"
+                      name="website"
+                      className="auth_input_"
+                      handleChange={handleChange}
+                    />
+                  </div>
+                </div>
               </div>
             </>
           )}
@@ -96,25 +151,23 @@ const Auth = () => {
             handleChange={handleChange}
             type="email"
           />
+          <Input
+            className="auth_input-"
+            name="password"
+            label="Password"
+            handleChange={handleChange}
+            type={showPassword ? "text" : "password"}
+            handleShowPassword={handleShowPassword}
+          />
+          {isSignUp && (
             <Input
               className="auth_input-"
-              name="password"
-              label="Password"
+              name="confirmPassword"
+              label="Confirm Password"
               handleChange={handleChange}
-              type={showPassword ? "text" : "password"}
-              handleShowPassword={handleShowPassword}
-
+              type="password"
             />
-            {isSignUp && (
-              <Input
-                className="auth_input-"
-                name="confirmPassword"
-                label="Confirm Password"
-                handleChange={handleChange}
-                type="password"
-              
-              />
-            )}
+          )}
 
           <Button
             type="submit"

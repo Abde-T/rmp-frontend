@@ -9,7 +9,7 @@ const FormSection = () => {
         <div className="form__wrapper" >
           <img src={coder} className="coder" alt="coder gif" data-aos="fade-right"/>
           <h2 className="form__phrase" data-aos="fade-left">
-            Your Portfolio Journey Starts Here: Join <span className="glitch" id="textGlitch">Review My Portfolio
+            Your Project Journey Starts Here: Join <span className="glitch" id="textGlitch">Review My Project
             </span> and Embark on a Path of Continuous Improvement.
           </h2>
         </div>

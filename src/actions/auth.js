@@ -20,14 +20,3 @@ export const signup = (form, navigate) => async (dispatch) => {
     console.log(error);
   }
 };
-
-export const getUsers = () => async (dispatch) => {
-  try {
-    
-    const response  = await api.fetchUsers();
-
-    dispatch({ type: FETCH_ALL_USERS, payload: response.data });
-  } catch (error) {
-    console.log(error);
-  }
-};

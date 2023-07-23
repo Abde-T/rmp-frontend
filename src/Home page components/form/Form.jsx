@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import FileBase from "react-file-base64";
 import { createPost, updatePost } from "../../actions/posts";
 import { useNavigate } from "react-router-dom";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import AddLinkIcon from "@mui/icons-material/AddLink";
 
@@ -11,7 +10,6 @@ const Form = ({ currentID, setCurrentId }) => {
   const [postData, setPostData] = useState({
     title: "",
     message: "",
-    linkedin: "",
     gitHub: "",
     website: "",
     tags: [],
@@ -36,7 +34,6 @@ const Form = ({ currentID, setCurrentId }) => {
     setPostData({
       title: "",
       message: "",
-      linkedin: "",
       gitHub: "",
       website: "",
       tags: [],
@@ -85,19 +82,6 @@ const Form = ({ currentID, setCurrentId }) => {
         ></textarea>
 
         <div className="icon__inputs">
-          <div className="icon__box">
-            <LinkedInIcon />
-            <input
-              type="text"
-              placeholder="LinkedIn"
-              name="LinkedIn"
-              className="icon__input"
-              value={postData.linkedin}
-              onChange={(e) =>
-                setPostData({ ...postData, linkedin: e.target.value })
-              }
-            />
-          </div>
           <div className="icon__box">
             <GitHubIcon />
             <input

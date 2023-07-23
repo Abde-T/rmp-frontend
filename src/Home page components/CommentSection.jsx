@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { commentPost } from '../actions/posts';
 import { Button, TextField, Typography } from '@mui/material';
-
+import noCom from '../assets/noCom.svg'
 const CommentSection = ({ post }) => {
   const user = JSON.parse(localStorage.getItem('profile'));
   const [comment, setComment] = useState('');
@@ -14,7 +14,7 @@ const CommentSection = ({ post }) => {
     const newComments = await dispatch(commentPost(`${user?.result?.name}: ${comment}`, post._id));
     setComment('');
     setComments(newComments);
-    commentsRef.current.scrollIntoView();
+    commentsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -23,12 +23,14 @@ const CommentSection = ({ post }) => {
         <div className='comments__wrapper'>
           <h2 >Comments</h2> 
           <div className="comnts">
-          {comments?.map((c, i) => (
+          {comments.length>0 ?  
+          (comments?.map((c, i) => (
             <p key={i} >
               <strong>{c.split(': ')[0]} : </strong>
               {c.split(':')[1]}
             </p>
-          ))}
+          ))):(<img src={noCom} alt="noComments"  className='noCom__image'/>
+          )}
           <div ref={commentsRef}/>
           </div>
         </div>

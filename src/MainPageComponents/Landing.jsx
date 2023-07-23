@@ -13,8 +13,8 @@ const Landing = () => {
         <div className="landing__wrapper">
           <div className="containerGlitch">
             <h1 className="landing__phrase" data-aos="fade-right">
-              Transform Your Portfolio Experience: Engage with a Supportive
-              Community on<span className="glitch" id="textGlitch"> Review My Portfolio
+              Transform Your Project Experience: Engage with a Supportive
+              Community on<span className="glitch" id="textGlitch"> Review My Project
               </span> and Witness the Difference.
             </h1>
           </div>

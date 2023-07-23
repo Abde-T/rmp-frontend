@@ -14,7 +14,7 @@ const Details = () => {
             </Link>
           </div>
           <div className="detail" data-aos="fade-up">
-            <h2> Upload your Portfolio </h2>
+            <h2> Upload your Project </h2>
             <Link to={'/home'}>
             <button> UPLOAD NOW </button>
             </Link>

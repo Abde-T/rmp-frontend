@@ -27,6 +27,7 @@ const Featured = ({ currentID, setCurrentId }) => {
         alignItems: "center",
         justifyContent: "center",
         scale: "1.9",
+        zIndex:'10',
         border: "1px solid black",
       }}
       onClick={onClick}
@@ -59,7 +60,8 @@ const Featured = ({ currentID, setCurrentId }) => {
     slidesToScroll: 3,
     initialSlide: 0,
     draggable: true,
-
+// nextArrow: <SampleNextArrow />,
+//     prevArrow: <SamplePrevArrow />,
     responsive: [
       {
         breakpoint: 1300,
@@ -102,7 +104,7 @@ const Featured = ({ currentID, setCurrentId }) => {
           </Link>
         </div>
         <div className="cards">
-          {!posts?.length > 0  ? (
+          {isLoading ? (
             renderLoadingStates()
           ) : (
             <Slider {...settings} className="flex ">
