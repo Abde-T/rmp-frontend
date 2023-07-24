@@ -69,9 +69,7 @@ const PostDetails = ({ currentID, setCurrentId }) => {
             <p>{post.tags?.map((tag) => `#${tag} `)}</p>
             <p>
               Created by:
-              <Link to={`/creators/${post.name}`}>
                 <span>{` ${post.name}`}</span>
-              </Link>
             </p>
             <p>{post.message}</p>
             

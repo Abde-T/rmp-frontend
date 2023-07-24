@@ -5,8 +5,10 @@ import "./HomePage.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import PersonIcon from "@mui/icons-material/Person";
-import { useDispatch } from "react-redux";
+import SortIcon from '@mui/icons-material/Sort';
+import { useDispatch, useSelector } from "react-redux";
 import * as actionType from "../constants/actionTypes";
+import { setFilterCriteria } from "../reducers/filterActions";
 
 const SideBar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -17,6 +19,14 @@ const SideBar = () => {
     dispatch({ type: actionType.LOGOUT });
     navigate("/auth");
     setUser(null);
+  };
+
+  const [filterValue, setFilterValue] = useState('newest')
+
+  const handleFilterChange = (value) => {
+    setFilterValue(value);
+    console.log(setFilterValue)
+    dispatch(setFilterCriteria(value));
   };
 
   return (
@@ -58,7 +68,61 @@ const SideBar = () => {
               Home
             </NavText>
           </NavItem>
-
+          <NavItem eventKey="sort" value={filterValue}  >
+            <NavIcon>
+              <SidebarLink Icon={SortIcon} />
+            </NavIcon>
+            <NavText
+              style={{
+                fontFamily: "Glitch Goblin",
+                color: "#242424",
+              }}
+            >
+              Sort by:
+            </NavText>
+            <NavItem eventKey="sort/Newest" onClick={() =>{handleFilterChange('newest')}}>
+              <NavText
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#242424",
+                  fontSize:'17px',
+                  fontWeight:'600'
+                }}
+              >
+                Newest
+              </NavText>
+            </NavItem>
+            <NavItem eventKey="sort/MostLiked"  onClick={() =>{handleFilterChange('likes')}}>
+              <NavText
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#242424",
+                  fontSize:'17px',
+                  fontWeight:'600'
+                }}
+              >
+                Most Liked
+              </NavText>
+            </NavItem>
+            <NavItem eventKey="sort/MostCommented" onClick={() =>{handleFilterChange('most_commented')}}>
+              <NavText
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#242424",
+                  fontSize:'17px',
+                  fontWeight:'600'
+                }}
+              >
+                Most Commented
+              </NavText>
+            </NavItem>
+            </NavItem>
           <NavItem eventKey="info" >
             <NavIcon>
               <SidebarLink Icon={PersonIcon} />
@@ -98,6 +162,7 @@ const SideBar = () => {
               </NavText>
             </NavItem>
           </NavItem>
+          
         </SideNav.Nav>
       </SideNav>
     </div>

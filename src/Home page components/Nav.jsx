@@ -12,7 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { MuiChipsInput } from "mui-chips-input";
 import { getPostsBySearch } from "../actions/posts";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
+import TextField from "@mui/material/TextField";
+import PhoneSortMenu from "../ui/PhoneSortMenu";
+import PhoneSearchMenu from "../ui/PhoneSearchMenu";
 
 const Nav = ({ currentID, setCurrentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -42,9 +45,11 @@ const Nav = ({ currentID, setCurrentId }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -60,9 +65,7 @@ const Nav = ({ currentID, setCurrentId }) => {
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
-        `/posts/search?searchQuery=${
-          search || "none"
-        }&tags=${tags.join(",")}`
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
       );
     } else {
       navigate("/posts");
@@ -100,8 +103,6 @@ const Nav = ({ currentID, setCurrentId }) => {
               value={tags}
               onChange={handleChange}
               label="Search Tags"
-              variant="outlined"
-              size="small"
             />
 
             <div className="search-box-icon">
@@ -122,6 +123,8 @@ const Nav = ({ currentID, setCurrentId }) => {
             </div>
           </div>
         </div>
+        <PhoneSortMenu/>
+        <PhoneSearchMenu/>
       </div>
       {user ? (
         <>
@@ -163,6 +166,7 @@ const Nav = ({ currentID, setCurrentId }) => {
                 sx: {
                   overflow: "visible",
                   filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  boxShadow: "4px 4px #242424",
                   mt: 1.5,
                   "& .MuiAvatar-root": {
                     width: 32,
@@ -189,13 +193,16 @@ const Nav = ({ currentID, setCurrentId }) => {
             >
               <MenuItem>
                 <Link to={`/creators/${user?.result.name}`}>
-                  <div className="user__name"> <PersonIcon/> Profile </div>
+                  <div className="user__name">
+                    {" "}
+                    <PersonIcon /> Profile{" "}
+                  </div>
                 </Link>
               </MenuItem>
               <MenuItem>
                 <button className="button-confirm none" onClick={HandleOpen}>
                   Upload
-                </button >
+                </button>
               </MenuItem>
               <Divider />
               <MenuItem>
@@ -206,7 +213,7 @@ const Nav = ({ currentID, setCurrentId }) => {
             </Menu>
           </div>
         </>
-      ) : <UsersLoading currentID={currentID} setCurrentId={setCurrentId} /> ? (
+      ) : <UsersLoading /> ? (
         <Link to={"/auth"}>
           <button className="button-confirm signin_button">Sign in</button>
         </Link>
