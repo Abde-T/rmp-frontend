@@ -5,8 +5,8 @@ import "./HomePage.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import PersonIcon from "@mui/icons-material/Person";
-import SortIcon from '@mui/icons-material/Sort';
-import { useDispatch, useSelector } from "react-redux";
+import SortIcon from "@mui/icons-material/Sort";
+import { useDispatch } from "react-redux";
 import * as actionType from "../constants/actionTypes";
 import { setFilterCriteria } from "../reducers/filterActions";
 
@@ -21,11 +21,10 @@ const SideBar = () => {
     setUser(null);
   };
 
-  const [filterValue, setFilterValue] = useState('newest')
+  const [filterValue, setFilterValue] = useState("newest");
 
   const handleFilterChange = (value) => {
     setFilterValue(value);
-    console.log(setFilterValue)
     dispatch(setFilterCriteria(value));
   };
 
@@ -68,8 +67,14 @@ const SideBar = () => {
               Home
             </NavText>
           </NavItem>
-          <NavItem eventKey="sort" value={filterValue}  >
-            <NavIcon>
+          <NavItem eventKey="sort" value={filterValue}>
+            <NavIcon
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <SidebarLink Icon={SortIcon} />
             </NavIcon>
             <NavText
@@ -80,51 +85,72 @@ const SideBar = () => {
             >
               Sort by:
             </NavText>
-            <NavItem eventKey="sort/Newest" onClick={() =>{handleFilterChange('newest')}}>
+            <NavItem
+              eventKey="sort/Newest"
+              onClick={() => {
+                handleFilterChange("newest");
+              }}
+            >
               <NavText
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   color: "#242424",
-                  fontSize:'17px',
-                  fontWeight:'600'
+                  fontSize: "17px",
+                  fontWeight: "600",
                 }}
               >
                 Newest
               </NavText>
             </NavItem>
-            <NavItem eventKey="sort/MostLiked"  onClick={() =>{handleFilterChange('likes')}}>
+            <NavItem
+              eventKey="sort/MostLiked"
+              onClick={() => {
+                handleFilterChange("likes");
+              }}
+            >
               <NavText
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   color: "#242424",
-                  fontSize:'17px',
-                  fontWeight:'600'
+                  fontSize: "17px",
+                  fontWeight: "600",
                 }}
               >
                 Most Liked
               </NavText>
             </NavItem>
-            <NavItem eventKey="sort/MostCommented" onClick={() =>{handleFilterChange('most_commented')}}>
+            <NavItem
+              eventKey="sort/MostCommented"
+              onClick={() => {
+                handleFilterChange("most_commented");
+              }}
+            >
               <NavText
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   color: "#242424",
-                  fontSize:'17px',
-                  fontWeight:'600'
+                  fontSize: "17px",
+                  fontWeight: "600",
                 }}
               >
                 Most Commented
               </NavText>
             </NavItem>
-            </NavItem>
-          <NavItem eventKey="info" >
-            <NavIcon>
+          </NavItem>
+          <NavItem eventKey="info">
+            <NavIcon
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            >
               <SidebarLink Icon={PersonIcon} />
             </NavIcon>
             <NavText
@@ -162,7 +188,6 @@ const SideBar = () => {
               </NavText>
             </NavItem>
           </NavItem>
-          
         </SideNav.Nav>
       </SideNav>
     </div>

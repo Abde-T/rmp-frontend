@@ -1,4 +1,4 @@
-import { AUTH, FETCH_ALL_USERS } from '../constants/actionTypes';
+import { AUTH, SIGNIN_FAILURE } from '../constants/actionTypes';
 import * as api from '../api/index.js';
 
 export const signin = (form, navigate) => async (dispatch) => {
@@ -8,6 +8,7 @@ export const signin = (form, navigate) => async (dispatch) => {
     navigate('/posts');
   } catch (error) {
     console.log(error);
+    dispatch({ type: SIGNIN_FAILURE, error: error.response.data.message });
   }
 };
 

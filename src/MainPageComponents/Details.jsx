@@ -9,19 +9,19 @@ const Details = () => {
         <div className="details__wrapper">
           <div className="detail" data-aos="fade-right">
             <h2> create an account </h2>
-            <Link to={'/home'}>
+            <Link to={'/posts'}>
             <button> START NOW </button>
             </Link>
           </div>
           <div className="detail" data-aos="fade-up">
             <h2> Upload your Project </h2>
-            <Link to={'/home'}>
+            <Link to={'/posts'}>
             <button> UPLOAD NOW </button>
             </Link>
           </div>
           <div className="detail" data-aos="fade-left">
             <h2> GET FEEDBACK </h2>
-            <Link to={'/home'}>
+            <Link to={'/posts'}>
             <button> JOIN NOW </button>
             </Link>
           </div>

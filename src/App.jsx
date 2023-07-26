@@ -1,5 +1,5 @@
 import Mainpage from "./pages/Mainpage";
-import { BrowserRouter as Router, Routes, Route, redirect } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Auth from "./Home page components/Auth/Auth";

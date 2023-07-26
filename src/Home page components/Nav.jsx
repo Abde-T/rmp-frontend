@@ -16,11 +16,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import TextField from "@mui/material/TextField";
 import PhoneSortMenu from "../ui/PhoneSortMenu";
 import PhoneSearchMenu from "../ui/PhoneSearchMenu";
+import SearchIcon from "@mui/icons-material/Search";
+import LoginIcon from "@mui/icons-material/Login";
 
 const Nav = ({ currentID, setCurrentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
-
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,13 +33,10 @@ const Nav = ({ currentID, setCurrentId }) => {
 
   useEffect(() => {
     const token = user?.token;
-
     if (token) {
       const decodedToken = decode(token);
-
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
-
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
@@ -90,41 +87,42 @@ const Nav = ({ currentID, setCurrentId }) => {
       <div className="search">
         <div className="search-box">
           <div className="search-field">
-            <input
-              placeholder="Search..."
-              className="input"
-              type="text"
+            <TextField
+              label="Search..."
+              className="input_tags"
               onKeyDown={handleKeyPress}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              variant="standard"
+
             />
+            <Divider 
+             orientation="vertical"
+             flexItem sx={{ borderRightWidth: 3 }} 
+             style={{ background: '#24242493', 
+             boxShadow:'2px 2px #242424',
+             borderRadius:'4px'
+            }}
+            />
+
             <MuiChipsInput
+              size="small"
               className="input_tags"
               value={tags}
               onChange={handleChange}
               label="Search Tags"
+              variant="standard"
             />
 
             <div className="search-box-icon">
               <button className="btn-icon-content" onClick={searchPost}>
-                <i className="search-icon">
-                  <svg
-                    xmlns="://www.w3.org/2000/svg"
-                    version="1.1"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                      fill="#fff"
-                    ></path>
-                  </svg>
-                </i>
+                <SearchIcon />
               </button>
             </div>
           </div>
         </div>
-        <PhoneSortMenu/>
-        <PhoneSearchMenu/>
+        <PhoneSortMenu />
+        <PhoneSearchMenu />
       </div>
       {user ? (
         <>
@@ -174,18 +172,6 @@ const Nav = ({ currentID, setCurrentId }) => {
                     ml: -0.5,
                     mr: 1,
                   },
-                  "&:before": {
-                    content: '""',
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: "background.paper",
-                    transform: "translateY(-50%) rotate(45deg)",
-                    zIndex: 0,
-                  },
                 },
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -215,6 +201,9 @@ const Nav = ({ currentID, setCurrentId }) => {
         </>
       ) : <UsersLoading /> ? (
         <Link to={"/auth"}>
+          <button className="button-confirm login">
+            <LoginIcon />
+          </button>
           <button className="button-confirm signin_button">Sign in</button>
         </Link>
       ) : null}

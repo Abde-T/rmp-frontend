@@ -1,12 +1,18 @@
 import { Divider, Menu, MenuItem, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { MuiChipsInput } from "mui-chips-input";
+import SearchIcon from '@mui/icons-material/Search';
+import { getPostsBySearch } from "../actions/posts";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const PhoneSearchMenu = () => {
   const [anchorel, setAnchorel] = React.useState(null);
   const open_ = Boolean(anchorel);
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -45,18 +51,7 @@ const PhoneSearchMenu = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <i className="search-icon">
-            <svg
-              xmlns="://www.w3.org/2000/svg"
-              version="1.1"
-              viewBox="0 0 512 512"
-            >
-              <path
-                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                fill="#fff"
-              ></path>
-            </svg>
-          </i>
+          <SearchIcon/>
         </button>
       </div>
       <Menu
@@ -71,24 +66,12 @@ const PhoneSearchMenu = () => {
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             boxShadow: "-4px -4px #242424",
             mt: -12,
-            ml: 12,
+            ml: 3,
             "& .MuiAvatar-root": {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 168,
-              right: 120,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
             },
           },
         }}
@@ -103,6 +86,9 @@ const PhoneSearchMenu = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+           <button className="btn-icon-content" onClick={searchPost}>
+             <SearchIcon />
+           </button>
         </MenuItem>
         <Divider />
         <MenuItem>
@@ -111,8 +97,10 @@ const PhoneSearchMenu = () => {
             value={tags}
             onChange={handleChange}
             label="Search Tags"
-            onKeyDown={handleKeyPress}
           />
+           <button className="btn-icon-content" onClick={searchPost}>
+             <SearchIcon />
+          </button>
         </MenuItem>
       </Menu>
     </div>

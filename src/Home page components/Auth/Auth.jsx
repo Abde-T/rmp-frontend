@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
 import Icon from "./Icon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AUTH } from "../../constants/actionTypes";
 import { useNavigate } from "react-router-dom";
 import { signin, signup } from "../../actions/auth";
@@ -30,16 +30,18 @@ const Auth = () => {
   const [form, setForm] = useState(initialState);
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const error = useSelector((state) => state.auth.error);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleChange = (e) =>{
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
-  const handleFile = (base64) =>{
-    setForm({ ...form, selectedFile: base64 })
-  }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleFile = (base64) => {
+    setForm({ ...form, selectedFile: base64 });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,20 +107,17 @@ const Auth = () => {
                     type="file"
                     multiple={false}
                     name="selectedFile"
-                    onDone={({ base64 }) =>
-                    handleFile(base64)
-                  }
+                    onDone={({ base64 }) => handleFile(base64)}
                   />
                 </div>
                 <div className="singup__inputs">
-                <div className="icon__box">
+                  <div className="icon__box">
                     <LinkedInIcon />
                     <Input
                       label="LinkedIn"
                       name="linkedin"
                       className="auth_input_ "
                       handleChange={handleChange}
-
                     />
                   </div>
                   <div className="icon__box">
@@ -128,7 +127,6 @@ const Auth = () => {
                       name="gitHub"
                       className="auth_input_"
                       handleChange={handleChange}
-
                     />
                   </div>
                   <div className="icon__box">
@@ -169,6 +167,7 @@ const Auth = () => {
             />
           )}
 
+          {error && <div className="error-message">{error}</div>}
           <Button
             type="submit"
             className="auth_button"

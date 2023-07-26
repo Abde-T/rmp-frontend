@@ -10,14 +10,14 @@ import SideBar from "../Home page components/SideBar";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Masonry from "@mui/lab/Masonry";
 
 const Creator = ({ currentID, setCurrentId }) => {
   const { name } = useParams();
   const dispatch = useDispatch();
   const { posts, isLoading } = useSelector((state) => state.posts);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
-  console.log(user);
+  const { sortBy } = useSelector((state) => state.filter);
 
   const location = useLocation();
 
@@ -28,6 +28,16 @@ const Creator = ({ currentID, setCurrentId }) => {
       dispatch(getPostsByCreator(user?.result.name));
     }
   }, []);
+
+  const filteredPosts = posts.sort((a, b) => {
+    if (sortBy === "likes") {
+      return b.likes?.length - a.likes?.length;
+    } else if (sortBy === "most_commented") {
+      return b.comments.length - a.comments.length;
+    } else {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+  });
 
   return (
     <>
@@ -53,21 +63,21 @@ const Creator = ({ currentID, setCurrentId }) => {
                   {user?.result.name.charAt(0)}
                 </Avatar>
                 <div className="creator_details">
-                <div className="creator_credentials">
-                  <h1>{user?.result.name}</h1>
-                  <p>@{user?.result.name}</p>
-                </div>
-                <div className="creatorPosts__links">
-                  <Link to={user?.result.linkedin} target="_blank">
-                    <LinkedInIcon className="post__icon" /> 
-                  </Link>
-                  <Link to={user?.result.gitHub} target="_blank">
-                    <GitHubIcon className="post__icon" />
-                  </Link>
-                  <Link to={user?.result.website} target="_blank">
-                    <OpenInNewIcon className="post__icon" />
-                  </Link>
-                </div>
+                  <div className="creator_credentials">
+                    <h1>{user?.result.name}</h1>
+                    <p>@{user?.result.name}</p>
+                  </div>
+                  <div className="creatorPosts__links">
+                    <Link to={user?.result.linkedin} target="_blank">
+                      <LinkedInIcon className="post__icon" />
+                    </Link>
+                    <Link to={user?.result.gitHub} target="_blank">
+                      <GitHubIcon className="post__icon" />
+                    </Link>
+                    <Link to={user?.result.website} target="_blank">
+                      <OpenInNewIcon className="post__icon" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             )}
@@ -76,18 +86,26 @@ const Creator = ({ currentID, setCurrentId }) => {
             ) : null}
           </div>
 
-          {isLoading ? (
-            <CircularProgress />
+          {isLoading ? ( 
+            <div className="loader">
+              <CircularProgress />
+            </div>
           ) : (
             <div className="creatorPost__wrapper">
-              {posts?.map((post, index) => (
-                <Post
-                  currentID={currentID}
-                  post={post}
-                  setCurrentId={setCurrentId}
-                  key={index}
-                />
-              ))}
+              <Masonry
+                columns={{ xs: 2, sm: 2, md: 2, lg: 4, xl: 5 }}
+                spacing={{ xs: 2, sm: 2, md: 3 }}
+                height={40}
+              >
+                {filteredPosts?.map((post, index) => (
+                  <Post
+                    currentID={currentID}
+                    post={post}
+                    setCurrentId={setCurrentId}
+                    key={index}
+                  />
+                ))}
+              </Masonry>
             </div>
           )}
         </div>
