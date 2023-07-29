@@ -7,7 +7,7 @@ import {legacy_createStore as createStore , applyMiddleware, compose} from 'redu
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)))
+const store = createStore(reducers, {}, compose(applyMiddleware(thunk)))
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>

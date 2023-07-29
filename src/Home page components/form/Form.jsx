@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FileBase from "react-file-base64";
 import { createPost, updatePost } from "../../actions/posts";
 import { useNavigate } from "react-router-dom";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import AddLinkIcon from "@mui/icons-material/AddLink";
+import Resizer from "react-image-file-resizer";
 
 const Form = ({ currentID, setCurrentId }) => {
   const [postData, setPostData] = useState({
@@ -15,6 +15,7 @@ const Form = ({ currentID, setCurrentId }) => {
     tags: [],
     selectedFile: "",
   });
+  console.log(postData);
   const navigate = useNavigate();
   const post = useSelector((state) =>
     currentID
@@ -42,20 +43,33 @@ const Form = ({ currentID, setCurrentId }) => {
   };
 
   const user = JSON.parse(localStorage.getItem("profile"));
+
+  const handleFileChange = (file) => {
+    Resizer.imageFileResizer(
+      file,
+      500, // maxWidth
+      500, // maxHeight
+      "JPEG", // compressFormat
+      80, // quality (0 to 100)
+      0, // rotation (0, 90, 180, or 270)
+      (uri) => {
+        setPostData({ ...postData, selectedFile: uri });
+      },
+      "base64" // outputType: "base64" | "blob" | "file"
+    );
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (currentID === 0) {
       dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
       clear();
     } else {
-      dispatch(
-        updatePost(currentID, { ...postData, name: user?.result?.name })
-      );
+      dispatch(updatePost(currentID, { ...postData, name: user?.result?.name }));
       clear();
     }
   };
 
+  
   return (
     <>
       <form className="nav__form" onSubmit={handleSubmit} autoComplete="off">
@@ -121,13 +135,12 @@ const Form = ({ currentID, setCurrentId }) => {
         />
         <div className="form__buttons">
           <div className="input__button">
-            <FileBase
+            <input
               type="file"
-              multiple={false}
-              onDone={({ base64 }) =>
-                setPostData({ ...postData, selectedFile: base64 })
-              }
-            />
+              name="selectedFile"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e.target.files[0])}
+              />
           </div>
           <button className="button-confirm" type="button" onClick={clear}>
             Clear

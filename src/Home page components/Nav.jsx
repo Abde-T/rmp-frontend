@@ -59,7 +59,7 @@ const Nav = ({ currentID, setCurrentId }) => {
   const [tags, setTags] = useState([]);
 
   const searchPost = () => {
-    if (search.trim() || tags) {
+    if (search.trim() || tags.length > 0) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       navigate(
         `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
@@ -186,9 +186,9 @@ const Nav = ({ currentID, setCurrentId }) => {
                 </Link>
               </MenuItem>
               <MenuItem>
-                <button className="button-confirm none" onClick={HandleOpen}>
+                <div className="button-confirm none" onClick={HandleOpen}>
                   Upload
-                </button>
+                </div>
               </MenuItem>
               <Divider />
               <MenuItem>

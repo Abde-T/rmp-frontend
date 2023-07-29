@@ -2,22 +2,27 @@ import React, { useEffect, useState } from "react";
 import CardLoadingstate from "../ui/CardLoadingstate";
 import Post from "../Home page components/Post/Post";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Nav from "../Home page components/Nav";
 import SideBar from "../Home page components/SideBar";
-import { getPosts } from "../actions/posts";
 import Masonry from "@mui/lab/Masonry";
+import Pagination from "../Home page components/Pagination";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 const Projects = () => {
   const { posts, isLoading } = useSelector((state) => state.posts);
   const { sortBy } = useSelector((state) => state.filter);
   const [currentID, setCurrentId] = useState(0);
-  const dispatch = useDispatch();
 
   console.log(posts);
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentID, dispatch]);
+
+  const query = useQuery();
+  const page = query.get('page') || 1;
+  const [tags, setTags] = useState([]);
+  const searchQuery = query.get('searchQuery');
 
   const filteredPosts = posts.sort((a, b) => {
     if (sortBy === "likes") {
@@ -55,6 +60,11 @@ const Projects = () => {
                 ))}
           </Masonry>
         </div>
+        {(!searchQuery && !tags.length) && (
+        <div className="page">
+        <Pagination page={page} />
+      </div>  
+      )}
       </div>
     </>
   );

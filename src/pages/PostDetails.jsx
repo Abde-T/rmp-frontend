@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { getPost, getPostsBySearch } from "../../src/actions/posts";
 import { CircularProgress, Divider } from "@mui/material";
@@ -10,7 +10,9 @@ import SideBar from "../Home page components/SideBar";
 import CommentSection from "../Home page components/CommentSection";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-const PostDetails = ({ currentID, setCurrentId }) => {
+
+const PostDetails = () => {
+  const [currentID, setCurrentId] = useState(0);
   const { post, posts, isLoading } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -22,9 +24,7 @@ const PostDetails = ({ currentID, setCurrentId }) => {
 
   useEffect(() => {
     if (post) {
-      dispatch(
-        getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
-      );
+      dispatch(getPostsBySearch({ search: "none", tags: post?.tags.join(",") }));
     }
   }, [post]);
 
@@ -56,12 +56,12 @@ const PostDetails = ({ currentID, setCurrentId }) => {
             <div className="links">
             <h1>{post.title}</h1>
             <div className="posts__links">
-              <Link to={post?.gitHub} target="_blank">
+              <a href={post?.gitHub} target="_blank">
                 <GitHubIcon className="post__icon"/>
-              </Link>
-              <Link to={post?.website} target="_blank">
+              </a>
+              <a href={post?.website} target="_blank">
                 <OpenInNewIcon className="post__icon"/>
-              </Link>
+              </a>
             </div>
             </div>
             <p>{post.tags?.map((tag) => `#${tag} `)}</p>
@@ -88,7 +88,7 @@ const PostDetails = ({ currentID, setCurrentId }) => {
   
           </div>
         </div>
-        {recommendedPosts?.length && (
+        {!!recommendedPosts.length && (
           <div className="recommendedPosts">
             <h1 variant="h5">You might also like:</h1>
             <Divider />

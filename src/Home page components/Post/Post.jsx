@@ -20,6 +20,8 @@ const Post = ({ currentID, post, setCurrentId }) => {
   const userId = user?.result.googleId || user?.result?._id;
   const [likes, setLikes] = useState(post?.likes);
   const hasLikedPost = post.likes?.find((like) => like === userId);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLike = async () => {
     dispatch(likePost(post._id));
@@ -31,8 +33,6 @@ const Post = ({ currentID, post, setCurrentId }) => {
     }
   };
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,7 +60,11 @@ const Post = ({ currentID, post, setCurrentId }) => {
   const openPost = () => navigate(`/posts/${post._id}`);
 
   const [Open, setOpen] = useState(false);
-  const HandleOpen = () => setOpen(true);
+  const HandleOpen = (e) =>{ 
+    e.preventDefault();
+    e.stopPropagation()
+    setOpen(true);
+  }
   const HandleClose = () => setOpen(false);
 
 
@@ -135,9 +139,8 @@ const Post = ({ currentID, post, setCurrentId }) => {
                   <div
                     className="button-confirm delete__button"
                     onClick={(e) => {
+                      HandleOpen(e);
                       setCurrentId(post._id);
-                      HandleOpen();
-                      e.stopPropagation();
                     }}
                   >
                     <UpdateIcon className="update__ico" /> update

@@ -12,7 +12,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Masonry from "@mui/lab/Masonry";
 
-const Creator = ({ currentID, setCurrentId }) => {
+const Creator = () => {
+  const [currentID, setCurrentId] = useState(0);
   const { name } = useParams();
   const dispatch = useDispatch();
   const { posts, isLoading } = useSelector((state) => state.posts);
@@ -25,7 +26,7 @@ const Creator = ({ currentID, setCurrentId }) => {
     if (location.pathname.startsWith("/tags")) {
       dispatch(getPostsBySearch({ tags: name }));
     } else {
-      dispatch(getPostsByCreator(user?.result.name));
+      dispatch(getPostsByCreator(name));
     }
   }, []);
 
@@ -86,7 +87,7 @@ const Creator = ({ currentID, setCurrentId }) => {
             ) : null}
           </div>
 
-          {isLoading ? ( 
+          {isLoading ? (
             <div className="loader">
               <CircularProgress />
             </div>
