@@ -274,7 +274,7 @@ body{
     border-radius: 5px;
     border: 2px solid #242424;
     background-color: var(--bg-color);
-    box-shadow: 4px 4px #242424;
+    box-shadow: 2px 4px #242424;
     font-size: 17px;
     font-weight: 600;
     color: #242424;
@@ -533,6 +533,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 .delet__ico{
   color: rgb(207, 26, 26);
@@ -654,6 +655,7 @@ body{
   justify-content: center;
 
 }
+
 .dropMenu__button{
   position: absolute;
   top: 0px;

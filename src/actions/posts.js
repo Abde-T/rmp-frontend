@@ -3,13 +3,21 @@ import * as api from '../api/index.js';
 
 export const getPosts = (page) => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING });
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
+    dispatch({ type: "START_LOADING" });
 
-    dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
-    dispatch({ type: END_LOADING });
+    // Make the API request to fetch posts
+    const { data } = await api.fetchPosts(page);
+
+    // Here, data should contain the array of posts
+    dispatch({ type: "FETCH_ALL", payload: data });
+
+    dispatch({ type: "END_LOADING" });
+
+    // Return the array of posts from the response
+    return data;
   } catch (error) {
-    console.log(error);
+    console.error("Error loading posts:", error);
+    throw error; // Rethrow the error to handle it in the Paginate component
   }
 };
 
