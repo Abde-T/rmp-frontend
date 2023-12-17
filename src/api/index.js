@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_BASE_URL = "https://rmpapi.onrender.com" || 'http://localhost:3000'
+const API_BASE_URL =  process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000'
 const API = axios.create({ baseURL: API_BASE_URL});
 
 API.interceptors.request.use((req) => {
@@ -14,7 +13,7 @@ API.interceptors.request.use((req) => {
 
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
-export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+export const fetchPosts = (page, sortBy) => API.get(`/posts?page=${page}`);
 export const fetchPostsByCreator = (name) => API.get(`/posts/creator?name=${name}`);
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 export const createPost = (newPost) => API.post('/posts', newPost);

@@ -11,6 +11,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Masonry from "@mui/lab/Masonry";
+import Footer from "../MainPageComponents/Footer";
 
 const Creator = () => {
   const [currentID, setCurrentId] = useState(0);
@@ -111,6 +112,7 @@ const Creator = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

@@ -6,7 +6,6 @@
   box-sizing: border-box;
 }
 :root {
-  background-color: #e6e6e7;
   overflow-x: hidden;
 }
 ::-webkit-scrollbar {
@@ -41,6 +40,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #e6e6e7;
+
 }
 .landing__container {
   height: 100vh;
@@ -48,7 +49,6 @@
 .row {
   width: 100%;
   max-width: 1400px;
-
 }
 
 .logo {
@@ -193,6 +193,7 @@
 }
 
 .footer__container {
+  z-index: 15;
   width: 100%;
   padding: 50px;
   display: flex;
@@ -200,14 +201,14 @@
   justify-content: center;
   background-color: #242424;
 }
-.footer__wrapper{
+.footer__wrapper {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: start;
   justify-content: center;
 }
-.footer__container .col{
+.footer__container .col {
   width: 190px;
   float: left;
   padding: 0px 20px 20px 20px;
@@ -218,10 +219,10 @@
   font-size: 18px;
   line-height: 17px;
   padding: 20px 0px 5px 0px;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
   font-weight: normal;
   text-transform: uppercase;
-  letter-spacing: 0.250em;
+  letter-spacing: 0.25em;
 }
 .col1 {
   display: flex;
@@ -237,7 +238,7 @@
   font-weight: bold;
   padding: 5px 0px 5px 0px;
   cursor: pointer;
-  transition: .2s;
+  transition: 0.2s;
 }
 .footer__container .col ul {
   list-style-type: none;
@@ -250,15 +251,14 @@
   font-weight: bold;
   padding: 5px 0px 5px 0px;
   cursor: pointer;
-  transition: .2s;
-  
+  transition: 0.2s;
 }
 .footer__container .col ul li:hover {
   cursor: not-allowed;
   color: #ffffff;
-  transition: .1s;
-  -webkit-transition: .1s;
-  -moz-transition: .1s;
+  transition: 0.1s;
+  -webkit-transition: 0.1s;
+  -moz-transition: 0.1s;
 }
 .footer__logo {
   filter: invert();
@@ -412,6 +412,7 @@
   text-align: center;
   color: #000000;
 }
+
 .detail button {
   height: 50px;
   width: 200px;
@@ -431,7 +432,7 @@
     margin-top: 10px;
     font-size: 33px;
   }
-  .landing__container{
+  .landing__container {
     margin: 90px 0;
   }
   .landing__button {
@@ -499,27 +500,26 @@
 @media (max-width: 1100px) {
   .landing__phrase,
   .form__phrase,
-  .info__phrase{
+  .info__phrase {
     margin-top: 10px;
     font-size: 30px;
     letter-spacing: 3px;
     padding: 2px;
   }
-  .landing__container{
+  .landing__container {
     margin: 0;
   }
-  .info__phrase{
+  .info__phrase {
     width: 100%;
   }
-  .form__phrase{
+  .form__phrase {
     font-size: 25px;
-
   }
   .coder {
     width: 220%;
     margin: 0 -150px 0 0;
   }
-  .pc{
+  .pc {
     width: 500px;
     margin: 100px auto 0 auto;
   }
@@ -547,12 +547,12 @@
     height: 300px;
     transform: translate(-50%, -50%);
   }
-  .footer__wrapper{
+  .footer__wrapper {
     width: 950px;
   }
 }
 @media (max-width: 950px) {
-  .footer__wrapper{
+  .footer__wrapper {
     width: 900px;
   }
   .footer__container .col {
@@ -566,10 +566,12 @@
   }
 }
 @media (max-width: 700px) {
-  .landing__wrapper, .details__wrapper, .info__wrapper{
+  .landing__wrapper,
+  .details__wrapper,
+  .info__wrapper {
     flex-direction: column;
   }
-  .form__wrapper{
+  .form__wrapper {
     flex-direction: column-reverse;
   }
   .logo {
@@ -581,11 +583,11 @@
     font-size: 20px;
     letter-spacing: 1px;
   }
-  .landing__phrase{
+  .landing__phrase {
     margin: 10px auto;
     padding: 0 5px;
   }
-  .info__phrase{
+  .info__phrase {
     margin: 0 -30px 30px 0;
   }
   .details__container {
@@ -607,7 +609,7 @@
     margin: 100px 0px 0 -20px;
     width: 400px;
   }
-  .pc{
+  .pc {
     width: 500px;
     margin: 50px 0 0 0px;
   }
@@ -622,7 +624,7 @@
     height: 240px;
     transform: translate(-50%, -50%);
   }
-  .form__phrase{
+  .form__phrase {
     width: 100%;
     padding: 0 20px;
     margin: 0 auto;
@@ -631,13 +633,19 @@
   .info__wrapper::after {
     width: 300px;
   }
-  .footer__wrapper{
+  .footer__wrapper {
     width: 650px;
   }
 }
 
 @media (max-width: 500px) {
+  .footer__container {
+   
+    padding: 20px;
+    padding-bottom: 120px;
 
+    background-color: #242424;
+  }
   .footer__container .col {
     width: 50%;
   }
@@ -647,17 +655,15 @@
   .footer__container .col ul li {
     font-size: 14px;
   }
-  .footer__wrapper{
+  .footer__wrapper {
     width: 400px;
   }
 }
 @media (max-width: 340px) {
-
   .footer__container .col {
     width: 100%;
   }
-  .footer__wrapper{
+  .footer__wrapper {
     width: 300px;
   }
-  
 }

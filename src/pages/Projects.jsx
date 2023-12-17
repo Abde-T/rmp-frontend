@@ -7,6 +7,9 @@ import Nav from "../Home page components/Nav";
 import SideBar from "../Home page components/SideBar";
 import Masonry from "@mui/lab/Masonry";
 import Pagination from "../Home page components/Pagination";
+import Footer from "../MainPageComponents/Footer";
+import Carousel from "../ui/Carousel";
+import CarouselLoader from "../ui/CarouselLoader";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -18,11 +21,10 @@ const Projects = () => {
 
   console.log(posts);
 
-
   const query = useQuery();
-  const page = query.get('page') || 1;
+  const page = query.get("page") || 1;
   const [tags, setTags] = useState([]);
-  const searchQuery = query.get('searchQuery');
+  const searchQuery = query.get("searchQuery");
 
   const filteredPosts = posts.sort((a, b) => {
     if (sortBy === "likes") {
@@ -34,16 +36,20 @@ const Projects = () => {
     }
   });
 
-
   return (
     <>
       <Nav currentID={currentID} setCurrentId={setCurrentId} />
       <SideBar />
       <div className="projects__container">
+        <div className="carousel_wrapper">
+          <h1 className="projects">Featured projects:</h1>
+          {isLoading? <CarouselLoader/> : <Carousel/>}
+          <h1 className="projects_">All projects:</h1>
+        </div>
         <div className="cards-">
           <Masonry
-            columns={{xs:2, sm: 2, md: 2, lg:4, xl:5 }}
-            spacing={{ xs: 1, sm: 2, md: 3 }}
+            columns={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}
+            spacing={{ xs: 1, sm: 2, md: 2 }}
             height={40}
           >
             {isLoading
@@ -60,12 +66,13 @@ const Projects = () => {
                 ))}
           </Masonry>
         </div>
-        {(!searchQuery && !tags.length) && (
-        <div className="page">
-        <Pagination page={page} />
-      </div>  
-      )}
+        {!searchQuery && !tags.length && (
+          <div className="page">
+            <Pagination page={page} />
+          </div>
+        )}
       </div>
+      <Footer />
     </>
   );
 };

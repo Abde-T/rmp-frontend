@@ -10,6 +10,8 @@ import SideBar from "../Home page components/SideBar";
 import CommentSection from "../Home page components/CommentSection";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import Footer from "../MainPageComponents/Footer";
+
 
 const PostDetails = () => {
   const [currentID, setCurrentId] = useState(0);
@@ -46,11 +48,14 @@ const PostDetails = () => {
 
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
+
+
   return (
     <>
       <Nav currentID={currentID} setCurrentId={setCurrentId} />
       <SideBar />
       <div className="post__container">
+
         <div className="post__wrapper">
           <div className="post__details">
             <div className="links">
@@ -89,6 +94,7 @@ const PostDetails = () => {
           </div>
         </div>
         {!!recommendedPosts.length && (
+          
           <div className="recommendedPosts">
             <h1 variant="h5">You might also like:</h1>
             <Divider />
@@ -112,6 +118,7 @@ const PostDetails = () => {
           </div>
         )}
       </div>
+      <Footer/>
     </>
   );
 };
